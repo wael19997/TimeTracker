@@ -8,17 +8,26 @@
       <p>{{i.time}}</p>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+       
+        </div>
+       <div class="col">
+        <p>Total {{TimeSum}}</p>
+        </div>
+    </div>
     </div>
 </template>
 <script>
+import "bootstrap/dist/css/bootstrap.css"
 export default {
   name: 'Component-Table',
-  props: ['periods']
+  props: ['periods','TimeSum']
 }
 </script>
 <style >
 p{
-  font-size: 15px;}
+  font-size: 20px;}
 .row{
   display: flex;
       justify-content: center

@@ -1,5 +1,5 @@
 <template>
-  <header>
+ 
    <div class="Chronometre">
    
     <div class="Time">
@@ -15,16 +15,16 @@
       </div>
       <div class="chronometer">
        
-        <p>{{hh}}:{{ mm}}:{{ss}}</p>
+        <h3>{{hh}}:{{ mm}}:{{ss}}</h3>
       </div>
       
        
     </div>
     <div class="tb">
-    <Table :periods="periods"/>
+    <Table :periods="periods" :TimeSum="TimeSum"/>
     </div>
    </div>
-  </header>
+
 </template>
 <script>
 import Table from './Table.vue'
@@ -32,7 +32,7 @@ import Date from './Date.vue'
 // import axios from 'axios'
 export default {
   name: 'Component-Chronometre',
-  props:['start','stop','periods','interval','ss','mm','hh'],
+  props:['start','stop','periods','interval','ss','mm','hh','TimeSum'],
    components:{
     Table,
     Date

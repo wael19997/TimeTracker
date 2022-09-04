@@ -1,8 +1,8 @@
 <template>
 
- 
-  <Chronometre :start="start" :stop="stop" :periods="periods" :hh="hh" :mm="mm" :ss="ss" :interval="interval"/>
-  {{this.TimeSum}}
+ <div class="row">
+ </div>
+  <Chronometre :TimeSum="TimeSum" :start="start" :stop="stop" :periods="periods" :hh="hh" :mm="mm" :ss="ss" :interval="interval"/>
 </template>
 
 <script>
