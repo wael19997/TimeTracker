@@ -21,7 +21,7 @@
        
     </div>
     <div class="tb">
-    <Table :periods="periods" :TimeSum="TimeSum"/>
+    <Table :periods="periods" :TimeSum="TimeSum" :running="running" :ss="ss" :mm="mm" :hh="hh"/>
     </div>
    </div>
 
@@ -32,7 +32,7 @@ import Date from './Date.vue'
 // import axios from 'axios'
 export default {
   name: 'Component-Chronometre',
-  props:['start','stop','periods','interval','ss','mm','hh','TimeSum'],
+  props:['start','stop','periods','interval','ss','mm','hh','TimeSum','running'],
    components:{
     Table,
     Date

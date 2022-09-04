@@ -1,5 +1,13 @@
 <template>
     <div class="table">
+      <div class="row" v-if=running>
+      <div class="col">
+      <p>Current period</p>
+      </div>
+      <div class="col">
+      <p>{{hh}}:{{ mm}}:{{ss}}</p>
+      </div>
+    </div>
     <div class="row" v-for=" i in periods" :key="i.id">
       <div class="col">
       <p>{{i.period}}</p>
@@ -19,10 +27,13 @@
     </div>
 </template>
 <script>
+
 import "bootstrap/dist/css/bootstrap.css"
+
 export default {
   name: 'Component-Table',
-  props: ['periods','TimeSum']
+  props: ['periods','TimeSum','running','hh','ss','mm']
+
 }
 </script>
 <style >

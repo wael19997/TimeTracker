@@ -2,7 +2,7 @@
 
  <div class="row">
  </div>
-  <Chronometre :TimeSum="TimeSum" :start="start" :stop="stop" :periods="periods" :hh="hh" :mm="mm" :ss="ss" :interval="interval"/>
+  <Chronometre :TimeSum="TimeSum" :start="start" :stop="stop" :periods="periods" :hh="hh" :mm="mm" :ss="ss" :interval="interval" :running="running"/>
 </template>
 
 <script>
@@ -38,7 +38,8 @@ export default {
          ss: 0,
          mm: 0,
          hh: 0,
-         TimeSum:'00:00:00'
+         TimeSum:'00:00:00',
+         running:false
        
   }
   },
@@ -46,7 +47,7 @@ export default {
      
      await axios.get("http://localhost:3000/time")
       .then(response => {console.log(response.data);
-        this.periods=response.data})
+        this.periods=response.data.reverse()})
         var sec=0
         this.periods.map(j=>{
         sec+=transformetime(j.time)
@@ -56,9 +57,11 @@ export default {
   methods:{
      start(){
        var somme=transformetime(this.TimeSum)
+       this.running=true
         this.interval=setInterval(()=>{
             this.ss++
             this.TimeSum=sumTime(somme+this.ss)
+
         if (this.ss===59){
             this.mm++;
             this.ss=0      
@@ -73,10 +76,11 @@ export default {
         
 },
    stop(){
+    this.running=false
     clearInterval(this.interval);
     const currentPeriod={period:"period"+Number(this.periods.length+1) , time:this. hh+':'+this. mm+':'+this.ss}
     axios.post("http://localhost:3000/time",currentPeriod)
-    this.periods.push(currentPeriod)
+    this.periods.unshift(currentPeriod)
     this.ss= 0
     this. mm= 0
     this. hh= 0
