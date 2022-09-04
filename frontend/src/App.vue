@@ -2,7 +2,7 @@
 
  
   <Chronometre :start="start" :stop="stop" :periods="periods" :hh="hh" :mm="mm" :ss="ss" :interval="interval"/>
-  
+  {{this.TimeSum}}
 </template>
 
 <script>
@@ -10,6 +10,21 @@
 
 import  Chronometre from './components/Chronometre.vue'
  import axios from 'axios'
+  function sumTime(sec){
+        var h=Math.floor(sec/3600)
+        var m=Math.floor((sec-(h*3600))/60)
+        var s=sec-(h*3600+m*60)
+        return `${h}:${m}:${s}`
+  }
+   function transformetime(time){
+    const separator=':'
+     var sec = 0
+     const list=time.split(separator);
+     sec+=(parseInt(list[0])*3600+parseInt(list[1])*60+parseInt(list[2]))
+     return sec
+  }
+
+
 
 export default {
   name: 'App',
@@ -20,21 +35,30 @@ export default {
   {return{
         periods:[],
         interval:null,
-         ss: parseInt('00',8),
-         mm: parseInt('00',8),
-         hh: parseInt('00',8)
+         ss: 0,
+         mm: 0,
+         hh: 0,
+         TimeSum:'00:00:00'
        
   }
   },
-    mounted(){
-      axios.get("http://localhost:3000/time")
+    async mounted(){
+     
+     await axios.get("http://localhost:3000/time")
       .then(response => {console.log(response.data);
         this.periods=response.data})
+        var sec=0
+        this.periods.map(j=>{
+        sec+=transformetime(j.time)
+        })
+        this.TimeSum=sumTime(sec)
 },
   methods:{
      start(){
+       var somme=transformetime(this.TimeSum)
         this.interval=setInterval(()=>{
             this.ss++
+            this.TimeSum=sumTime(somme+this.ss)
         if (this.ss===59){
             this.mm++;
             this.ss=0      
@@ -43,20 +67,24 @@ export default {
             this.hh++;
             this.mm=0   
         }
+        
         },1000) 
+       
+        
 },
    stop(){
-   
     clearInterval(this.interval);
     const currentPeriod={period:"period"+Number(this.periods.length+1) , time:this. hh+':'+this. mm+':'+this.ss}
-    this.periods.push(currentPeriod)
-    this.ss= parseInt('00',8)
-    this. mm= parseInt('00',8)
-    this. hh= parseInt('00',8)
     axios.post("http://localhost:3000/time",currentPeriod)
+    this.periods.push(currentPeriod)
+    this.ss= 0
+    this. mm= 0
+    this. hh= 0
+    
    }
    
-  }}
+  },
+  }
 </script>
 
 <style >

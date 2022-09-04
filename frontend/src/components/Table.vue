@@ -1,16 +1,14 @@
 <template>
-  <header>
     <div class="table">
     <div class="row" v-for=" i in periods" :key="i.id">
       <div class="col">
-      {{i.period}}
+      <p>{{i.period}}</p>
       </div>
       <div class="col">
-      {{i.time}}
+      <p>{{i.time}}</p>
       </div>
     </div>
     </div>
-  </header>
 </template>
 <script>
 export default {
@@ -19,7 +17,10 @@ export default {
 }
 </script>
 <style >
+p{
+  font-size: 15px;}
 .row{
+  display: flex;
       justify-content: center
 }
 </style>
