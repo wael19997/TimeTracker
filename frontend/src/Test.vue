@@ -45,7 +45,7 @@ export default {
   },
     async mounted(){
      
-     await axios.get("http://localhost:3333/time")
+     await axios.get("http://localhost:3000/time")
       .then(response => {console.log(response.data);
         this.periods=response.data.reverse()})
         var sec=0
@@ -79,7 +79,7 @@ export default {
     this.running=false
     clearInterval(this.interval);
     const currentPeriod={period:"period"+Number(this.periods.length+1) , time:this. hh+':'+this. mm+':'+this.ss}
-    axios.post("http://localhost:3333/time",currentPeriod)
+    axios.post("http://localhost:3000/time",currentPeriod)
     this.periods.unshift(currentPeriod)
     this.ss= 0
     this. mm= 0
