@@ -1,5 +1,5 @@
 <template>
-<p>fbbfbf</p>
+<p></p>
  <div class="row">
  </div>
   <Chronometre :TimeSum="TimeSum" :start="start" :stop="stop" :periods="periods" :hh="hh" :mm="mm" :ss="ss" :interval="interval" :running="running"/>

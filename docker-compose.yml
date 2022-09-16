@@ -33,7 +33,7 @@ services:
 
   db:
     profiles: [ "prod", "dev" ]
-    image: supabase/postgres:14.1.0
+    image: postgres:13-alpine
     container_name: postgres
     restart: always
     ports:
