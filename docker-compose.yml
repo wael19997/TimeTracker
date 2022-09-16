@@ -1,54 +1,62 @@
 version: '3.7'
 services:
-    web_dev:
-     profiles: ["dev"]
-     build:  
+  web_dev:
+    profiles: [ "dev" ]
+    build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Docker/Dockerfile.dev
 
-     ports:
+    tty: true
+    stdin_open: true
+    volumes:
+      - /workspace/TimeTracker/frontend/src:/app/src
+    ports:
       - 3000:8080
-    web_prod:
-     profiles: ["prod"]
-     build: 
+
+  web_prod:
+    profiles: [ "prod" ]
+    build:
       context: ./frontend
-      dockerfile: Dockerfile.prod
-     ports:
-      - 8080:8080
-    api:
-     profiles: ["prod","dev"]
+      dockerfile: Docker/Dockerfile.prod
 
-     build: ./backend
-     ports:
+    ports:
+      - 8080:80
+
+  api:
+    profiles: [ "prod", "dev" ]
+
+    build: ./backend
+    ports:
       - 3333:3333
-     environment:
+    environment:
       POSTGRESQL_URL: "postgres://postgres:123@db"
-    db:
-     profiles: ["prod","dev"]
-     image: supabase/postgres:14.1.0
-     container_name: postgres
-     restart: always
-     ports:
-       - '5432:5432'
-     volumes:
-       - ./db:/var/lib/postgresql/data
-     environment:
-       POSTGRES_PASSWORD: 123
-    # migrate:
-    #  build:
-    #   context: ./backend
-    #   dockerfile: ./backend/docker/dockerfile
-    #  environment:
-    #   POSTGRESQL_URL: "postgres://postgres:123@db"
 
-
-        
-    
-  
+  db:
+    profiles: [ "prod", "dev" ]
+    image: supabase/postgres:14.1.0
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: timeTracker
+  # migrate:
+  #  build:
+  #   context: ./backend
+  #   dockerfile: ./backend/docker/dockerfile
+  #  environment:
+  #   POSTGRESQL_URL: "postgres://postgres:123@db"
 
 
 
-  
+
+
+
+
+
+
 
 
 
