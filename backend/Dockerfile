@@ -5,12 +5,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma/schema.prisma ./prisma/
 RUN npm install
-
-RUN npm add -D prisma
-RUN npm add @prisma/client
+ARG POSTGRESQL_URL
 RUN npx prisma generate
-# RUN npx prisma migrate dev 
-# RUN npx prisma migrate dev --name migrationdata
 COPY . .
 EXPOSE 3333
 CMD ["npm", "run", "start"]

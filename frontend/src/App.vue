@@ -46,7 +46,6 @@ export default {
     async mounted(){
 
       console.log(process.env.VUE_APP_API_URL)
-     
      await axios.get(`${process.env.VUE_APP_API_URL}/time`)
       .then(response => {console.log(response.data);
         this.periods=response.data.reverse()})
