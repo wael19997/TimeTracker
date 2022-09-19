@@ -7,7 +7,8 @@ export class PrismaService extends PrismaClient {
         super({
             datasources:{
                 db:{
-                    url:"postgresql://postgres:123@localhost:5432/timeTracker?schema=public"
+                    url: process.env.POSTGRESQL_URL
+                    
                 }
             }
 

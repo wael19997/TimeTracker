@@ -36,6 +36,7 @@ services:
       # POSTGRESQL_URL: "postgres://postgres:123@db"
     volumes:
       - /workspace/TimeTracker/backend/src:/app/src
+      - ./backend/prisma:/app/prisma
     depends_on:
       - db  
 
@@ -69,7 +70,7 @@ services:
 
   db:
     profiles: [ "prod", "dev" ]
-    image: postgres:13-alpine
+    image: postgres:13
     container_name: postgres
     restart: always
     ports:
@@ -79,33 +80,29 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: timeTracker
  
+
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  # migrate:
-  #  build:
-  #   context: ./backend
-  #   dockerfile: ./backend/docker/dockerfile
-  #  environment:
-  #   POSTGRESQL_URL: "postgres://postgres:123@db"
+  migrate:
+    profiles: [ "dev" ]
+    build: ./backend
+
+    command:
+      - /bin/sh
+      - -c
+      - sleep 5 && chmod +x prisma/fixViewPrisma && ./prisma/fixViewPrisma && npm run db:migrate-up npm run seed && npm run seed-data
+    working_dir: /app
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./docker/supabase/volumes/db/migration:/app/prisma/migrations
+      # - ./server/prisma/schema.prisma:/app/prisma/schema.prisma
+    environment:
+      POSTGRESQL_URL: "postgres://postgres:123@db"
+    depends_on:
+      - db
+
 
 
 
