@@ -5,9 +5,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . /app
-# RUN npm add -D prisma
-# RUN npm add @prisma/client
+RUN npm add -D prisma
+RUN npm add @prisma/client
 RUN npx prisma generate
-# RUN npm run prisma generate
+# RUN npx prisma migrate dev 
+# RUN npx prisma migrate dev --name migrationdata
 EXPOSE 3333
 CMD ["npm", "run", "start"]

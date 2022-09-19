@@ -6,6 +6,7 @@ import { CreateTimeDto } from './dto';
 export class TimeService {
     constructor(private  prisma:PrismaService){}
     async getTime(){
+        
         return await this.prisma.time.findMany();
     };
     async createTime( time: CreateTimeDto){
