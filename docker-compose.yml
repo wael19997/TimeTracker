@@ -47,6 +47,8 @@ services:
     
   api-prod:
     profiles: ["prod" ]
+    tty: true
+    stdin_open: true
 
     build:
       context: ./backend
@@ -56,7 +58,7 @@ services:
       - 3333:3333
     environment:
       POSTGRESQL_URL: "postgres://postgres:123@db"   
-    command: npm run start:migrate:prod
+    command: npm run start:prod
     depends_on:
       - db  
 
@@ -72,17 +74,19 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: timeTracker
+    volumes:
+      - /var/lib/postgresql/data
+
  
 
  
  
  
   migrate:
-    profiles: [ "dev" ]
+    profiles: [ "dev" ,"prod" ]
     build: ./backend
 
-    command:
-      - npx prisma generate
+    command: npm run mig
     working_dir: /app
     tty: true
     stdin_open: true

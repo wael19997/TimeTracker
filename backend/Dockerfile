@@ -5,8 +5,10 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma/schema.prisma ./prisma/
 RUN npm install
-ARG POSTGRESQL_URL
 RUN npx prisma generate
 COPY . .
 EXPOSE 3333
+
+RUN npm run build
+
 CMD ["npm", "run", "start"]

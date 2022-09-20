@@ -6,9 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start:migrate:prod": "npx prisma migrate dev --schema=./prisma/schema.prisma && node dist/main",
+    "start:migrate:prod": "npx prisma migrate dev --schema=./prisma/schema.prisma --name migration && node dist/main",
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "mig": "npx prisma generate && npx prisma migrate dev --schema=./prisma/schema.prisma --name migration ",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
